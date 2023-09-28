@@ -57,7 +57,7 @@ Store a new message in the database.
 - **Example Response:**
   ```json
   {
-    "data": 1,
+    "data": null,
     "success": true
    }
   ```

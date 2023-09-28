@@ -80,7 +80,7 @@ func (srv *Microservice) handleData(w http.ResponseWriter, req bunrouter.Request
 	m := req.PostForm.Get("message")
 
 	message := &db.Message{Message: m}
-	res, err := srv.db.NewInsert().Model(message).Exec(ctx)
+	_, err := srv.db.NewInsert().Model(message).Exec(ctx)
 
 	if err != nil {
 				w.WriteHeader(400)
@@ -97,7 +97,7 @@ func (srv *Microservice) handleData(w http.ResponseWriter, req bunrouter.Request
 			"success": false,
 		})
 	}
-	rowId, err := res.RowsAffected()
+
 
 	if err != nil {
 				w.WriteHeader(400)
@@ -109,7 +109,7 @@ func (srv *Microservice) handleData(w http.ResponseWriter, req bunrouter.Request
 
 	bunrouter.JSON(w, bunrouter.H{
 		"success": true,
-		"data":    rowId,
+		"data":    nil,
 	})
 	return nil
 }
