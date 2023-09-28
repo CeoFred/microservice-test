@@ -51,6 +51,8 @@ func (srv *Microservice) retrieveMessages(w http.ResponseWriter, req bunrouter.R
 	err := srv.db.NewSelect().Model(&messages).Scan(ctx)
 
 	if err != nil {
+		w.WriteHeader(400)
+		w.Header().Add("Content-Type", "application/json")
 		return bunrouter.JSON(w, bunrouter.H{
 			"error":   err.Error(),
 			"success": false,
@@ -68,6 +70,7 @@ func (srv *Microservice) handleData(w http.ResponseWriter, req bunrouter.Request
 	ctx := context.Background()
 
 	if err := req.ParseForm(); err != nil {
+		w.WriteHeader(400)
 		return bunrouter.JSON(w, bunrouter.H{
 			"error":   err.Error(),
 			"success": false,
@@ -80,22 +83,30 @@ func (srv *Microservice) handleData(w http.ResponseWriter, req bunrouter.Request
 	res, err := srv.db.NewInsert().Model(message).Exec(ctx)
 
 	if err != nil {
-		fmt.Println(err)
+				w.WriteHeader(400)
 		return bunrouter.JSON(w, bunrouter.H{
 			"error":   err.Error(),
 			"success": false,
 		})
 	}
 
+	if m == "" {
+		w.WriteHeader(400)
+		return bunrouter.JSON(w, bunrouter.H{
+			"error":   "provide a message",
+			"success": false,
+		})
+	}
 	rowId, err := res.RowsAffected()
 
 	if err != nil {
-		fmt.Println(err)
+				w.WriteHeader(400)
 		return bunrouter.JSON(w, bunrouter.H{
 			"error":   err.Error(),
 			"success": false,
 		})
 	}
+
 	bunrouter.JSON(w, bunrouter.H{
 		"success": true,
 		"data":    rowId,
