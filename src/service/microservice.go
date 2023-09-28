@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
@@ -10,17 +11,19 @@ import (
 	"github.com/uptrace/bunrouter/extra/reqlog"
 
 	"github.com/SAMBA-Research/microservice-template/internal/config"
-	"github.com/SAMBA-Research/microservice-template/internal/tracing"
+	"github.com/SAMBA-Research/microservice-template/internal/db"
 	"github.com/SAMBA-Research/microservice-template/version"
 )
 
 type Microservice struct {
 	cfg *config.Config
+	db  *bun.DB
 }
 
 func NewMicroservice(cfg *config.Config, db *bun.DB) (srv *Microservice, err error) {
 	srv = &Microservice{
 		cfg: cfg,
+		db:  db,
 	}
 	return
 }
@@ -30,9 +33,7 @@ func (srv *Microservice) Run() {
 		bunrouter.Use(reqlog.NewMiddleware()),
 	)
 
-	router.GET("/", srv.indexHandler)
-	router.GET("/v1", srv.indexHandler)
-	router.GET("/v1/example", srv.exampleHandler)
+	router.POST("/data", srv.handleData)
 
 	log.Info().Msgf("Microservice %s listening on %s:%d", version.ServiceName, srv.cfg.ServiceBind, srv.cfg.ServicePort)
 	err := http.ListenAndServe(fmt.Sprintf("%s:%d", srv.cfg.ServiceBind, srv.cfg.ServicePort), router)
@@ -41,19 +42,39 @@ func (srv *Microservice) Run() {
 	}
 }
 
-func (srv *Microservice) indexHandler(w http.ResponseWriter, r bunrouter.Request) (err error) {
-	_, span := tracing.Tracer().Start(r.Context(), "service.indexHandler")
-	defer span.End()
+func (srv *Microservice) handleData(w http.ResponseWriter, req bunrouter.Request) error {
 
-	w.Write([]byte("This is an API server"))
-	return
-}
+	ctx := context.Background()
 
-func (srv *Microservice) exampleHandler(w http.ResponseWriter, r bunrouter.Request) (err error) {
-	_, span := tracing.Tracer().Start(r.Context(), "service.exampleHandler")
-	defer span.End()
+	if err := req.ParseForm(); err != nil {
+		return bunrouter.JSON(w, bunrouter.H{
+			"error": err.Error(),
+		})
+	}
 
-	return bunrouter.JSON(w, map[string]any{
-		"ok": true,
+	m := req.PostForm.Get("message")
+
+	message := &db.Message{Message: m}
+	res, err := srv.db.NewInsert().Model(message).Exec(ctx)
+
+	if err != nil {
+		fmt.Println(err)
+		return bunrouter.JSON(w, bunrouter.H{
+			"error": err.Error(),
+		})
+	}
+
+	rowId, err := res.RowsAffected()
+
+	if err != nil {
+		fmt.Println(err)
+		return bunrouter.JSON(w, bunrouter.H{
+			"error": err.Error(),
+		})
+	}
+	bunrouter.JSON(w, bunrouter.H{
+		"success": true,
+		"data":    rowId,
 	})
+	return nil
 }

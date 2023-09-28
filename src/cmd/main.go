@@ -1,7 +1,7 @@
 package main
 
 import (
-	"context"
+	// "context"
 	"flag"
 	"io"
 	"math/rand"
@@ -19,7 +19,7 @@ import (
 	"github.com/SAMBA-Research/microservice-template/internal/db"
 	"github.com/SAMBA-Research/microservice-template/internal/utils"
 	"github.com/SAMBA-Research/microservice-template/service"
-	"github.com/SAMBA-Research/microservice-template/version"
+	// "github.com/SAMBA-Research/microservice-template/version"
 )
 
 const (
@@ -42,15 +42,15 @@ func main() {
 	startTime = time.Now()
 	rand.Seed(startTime.UnixNano())
 
-	defaultCtx := context.Background()
+	// defaultCtx := context.Background()
 
 	cfg, err := config.InitConfig()
 	if err != nil {
 		panic(err)
 	}
-	if cfg.LogFileName != "" {
-		*logFileName = cfg.LogFileName
-	}
+	// if cfg.LogFileName != "" {
+	// 	*logFileName = cfg.LogFileName
+	// }
 
 	flag.Parse()
 
@@ -71,11 +71,11 @@ func main() {
 	sigChannel := make(chan os.Signal, 1)
 	signal.Notify(sigChannel, syscall.SIGINT)
 
-	otelShutdown, err := setupOTelSDK(defaultCtx, version.ServiceName, version.ServiceVersion, cfg)
-	if err != nil {
-		panic(err)
-	}
-	defer otelShutdown(defaultCtx)
+	// otelShutdown, err := setupOTelSDK(defaultCtx, version.ServiceName, version.ServiceVersion, cfg)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer otelShutdown(defaultCtx)
 
 	db := db.NewDbConnection(cfg)
 
