@@ -34,6 +34,7 @@ func (srv *Microservice) Run() {
 	)
 
 	router.POST("/data", srv.handleData)
+	router.GET("/data", srv.retrieveMessages)
 
 	log.Info().Msgf("Microservice %s listening on %s:%d", version.ServiceName, srv.cfg.ServiceBind, srv.cfg.ServicePort)
 	err := http.ListenAndServe(fmt.Sprintf("%s:%d", srv.cfg.ServiceBind, srv.cfg.ServicePort), router)
@@ -42,13 +43,34 @@ func (srv *Microservice) Run() {
 	}
 }
 
+func (srv *Microservice) retrieveMessages(w http.ResponseWriter, req bunrouter.Request) error {
+
+	ctx := context.Background()
+
+	var messages []db.Message
+	err := srv.db.NewSelect().Model(&messages).Scan(ctx)
+
+	if err != nil {
+		return bunrouter.JSON(w, bunrouter.H{
+			"error":   err.Error(),
+			"success": false,
+		})
+	}
+
+	return bunrouter.JSON(w, bunrouter.H{
+		"success": true,
+		"data":    messages,
+	})
+}
+
 func (srv *Microservice) handleData(w http.ResponseWriter, req bunrouter.Request) error {
 
 	ctx := context.Background()
 
 	if err := req.ParseForm(); err != nil {
 		return bunrouter.JSON(w, bunrouter.H{
-			"error": err.Error(),
+			"error":   err.Error(),
+			"success": false,
 		})
 	}
 
@@ -60,7 +82,8 @@ func (srv *Microservice) handleData(w http.ResponseWriter, req bunrouter.Request
 	if err != nil {
 		fmt.Println(err)
 		return bunrouter.JSON(w, bunrouter.H{
-			"error": err.Error(),
+			"error":   err.Error(),
+			"success": false,
 		})
 	}
 
@@ -69,7 +92,8 @@ func (srv *Microservice) handleData(w http.ResponseWriter, req bunrouter.Request
 	if err != nil {
 		fmt.Println(err)
 		return bunrouter.JSON(w, bunrouter.H{
-			"error": err.Error(),
+			"error":   err.Error(),
+			"success": false,
 		})
 	}
 	bunrouter.JSON(w, bunrouter.H{
