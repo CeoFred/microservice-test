@@ -25,8 +25,8 @@ Retrieve all messages stored in the database.
 - **Example Response:**
   ```json
   {
-    success: true
-    data: [
+    "success": true,
+    "data": [
       {
           "ID": 1,
           "message": "Hello, world!"
