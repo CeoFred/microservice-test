@@ -12,9 +12,13 @@ require (
 	github.com/uptrace/bun/driver/sqliteshim v1.1.16
 	github.com/uptrace/bunrouter v1.0.20
 	github.com/uptrace/bunrouter/extra/reqlog v1.0.20
-	go.opentelemetry.io/otel v1.18.0
-	go.opentelemetry.io/otel/metric v1.18.0
-	go.opentelemetry.io/otel/trace v1.18.0
+	go.opentelemetry.io/otel v1.19.0
+	go.opentelemetry.io/otel/exporters/stdout/stdoutmetric v0.42.0
+	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.19.0
+	go.opentelemetry.io/otel/metric v1.19.0
+	go.opentelemetry.io/otel/sdk v1.19.0
+	go.opentelemetry.io/otel/sdk/metric v1.19.0
+	go.opentelemetry.io/otel/trace v1.19.0
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9
 )
 
