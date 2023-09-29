@@ -39,6 +39,7 @@ Retrieve all messages stored in the database.
   }
   ```
 ---
+Certainly, you can modify the POST request to send a JSON body instead of `x-www-form-urlencoded`. Here's the updated documentation for the "Store a Message" endpoint:
 
 ### Store a Message
 
@@ -46,20 +47,22 @@ Store a new message in the database.
 
 - **Endpoint:** `POST /data`
 - **Description:** This endpoint allows you to store a new message in the database.
-- **Request Payload:** The request payload must be `x-www-form-urlencoded` with a key "message" and a string value.
+- **Request Payload:** The request payload must be in JSON format with a single key "message" and a string value.
 - **Example Request:**
   ```http
   POST /data
-  Content-Type: application/x-www-form-urlencoded
+  Content-Type: application/json
 
-  message=This%20is%20a%20new%20message
+  {
+    "message": "This is a new message"
+  }
   ```
 - **Example Response:**
   ```json
   {
     "data": null,
     "success": true
-   }
+  }
   ```
 - **Error Response:**
   - `400 Bad Request`: If the request payload is missing the "message" key or if the value is not a string.

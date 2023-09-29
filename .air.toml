@@ -12,7 +12,7 @@ tmp_dir = "tmp"
   exclude_regex = ["_test.go"]
   exclude_unchanged = false
   follow_symlink = false
-  full_bin = "SERVICE_PORT=3002 SERVICE_BIND=127.0.0.1 ./src/cmd/service"
+  full_bin = "ENVIRONMENT=dev METRICS_DESTINATION=metrics.json TRACE_DESTINATION=trace.json SERVICE_PORT=3002 SERVICE_BIND=127.0.0.1 LOG_FILE_NAME=_ ./src/cmd/service"
   include_dir = []
   include_ext = ["go", "tpl", "tmpl", "html"]
   kill_delay = "0s"

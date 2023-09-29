@@ -1,0 +1,21 @@
+{"level":"info","time":"2023-09-29T11:09:51Z","message":"Starting up..."}
+{"level":"info","time":"2023-09-29T11:09:51Z","message":"Alloc: 3 MiB\tTotalAlloc: 5 MiB\tSys: 17 MiB\tNumGC: 2\tUptime: 0.0h\n"}
+{"level":"info","time":"2023-09-29T11:09:51Z","message":"Microservice template listening on 127.0.0.1:3002"}
+{"level":"info","time":"2023-09-29T11:10:54Z","message":"Starting up..."}
+{"level":"info","time":"2023-09-29T11:10:54Z","message":"Alloc: 3 MiB\tTotalAlloc: 5 MiB\tSys: 17 MiB\tNumGC: 2\tUptime: 0.0h\n"}
+{"level":"info","time":"2023-09-29T11:10:54Z","message":"Microservice template listening on 127.0.0.1:3002"}
+{"level":"info","time":"2023-09-29T11:11:06Z","message":"Starting up..."}
+{"level":"info","time":"2023-09-29T11:11:06Z","message":"Alloc: 3 MiB\tTotalAlloc: 5 MiB\tSys: 21 MiB\tNumGC: 2\tUptime: 0.0h\n"}
+{"level":"info","time":"2023-09-29T11:11:06Z","message":"Microservice template listening on 127.0.0.1:3002"}
+{"level":"info","time":"2023-09-29T11:12:13Z","message":"Starting up..."}
+{"level":"info","time":"2023-09-29T11:12:13Z","message":"Alloc: 3 MiB\tTotalAlloc: 5 MiB\tSys: 21 MiB\tNumGC: 2\tUptime: 0.0h\n"}
+{"level":"info","time":"2023-09-29T11:12:13Z","message":"Microservice template listening on 127.0.0.1:3002"}
+{"level":"info","time":"2023-09-29T11:12:16Z","message":"Starting up..."}
+{"level":"info","time":"2023-09-29T11:12:16Z","message":"Alloc: 3 MiB\tTotalAlloc: 5 MiB\tSys: 17 MiB\tNumGC: 2\tUptime: 0.0h\n"}
+{"level":"info","time":"2023-09-29T11:12:16Z","message":"Microservice template listening on 127.0.0.1:3002"}
+{"level":"info","time":"2023-09-29T11:12:20Z","message":"Starting up..."}
+{"level":"info","time":"2023-09-29T11:12:20Z","message":"Alloc: 3 MiB\tTotalAlloc: 5 MiB\tSys: 21 MiB\tNumGC: 2\tUptime: 0.0h\n"}
+{"level":"info","time":"2023-09-29T11:12:20Z","message":"Microservice template listening on 127.0.0.1:3002"}
+{"level":"info","time":"2023-09-29T11:13:24Z","message":"Starting up..."}
+{"level":"info","time":"2023-09-29T11:13:24Z","message":"Alloc: 3 MiB\tTotalAlloc: 5 MiB\tSys: 21 MiB\tNumGC: 2\tUptime: 0.0h\n"}
+{"level":"info","time":"2023-09-29T11:13:24Z","message":"Microservice template listening on 127.0.0.1:3002"}
